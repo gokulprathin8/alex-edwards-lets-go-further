@@ -11,6 +11,9 @@ all: build
 dev:
 	@air
 
+dev-win:
+	@air -c .air.windows.toml
+
 build:
 	@echo "Building the application..."
 	@go build -o $(BUILD_DIR)/$(APP_NAME) $(SRC_DIR)
