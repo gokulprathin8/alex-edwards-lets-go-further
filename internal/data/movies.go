@@ -1,10 +1,15 @@
 package data
 
 import (
+	"database/sql"
 	"encoding/json"
 	"fmt"
 	"time"
 )
+
+type MovieModel struct {
+	DB *sql.DB
+}
 
 type Movie struct {
 	ID        int64     `json:"id"`
@@ -18,7 +23,7 @@ type Movie struct {
 
 func (m Movie) MarshalJSON() ([]byte, error) {
 
-  var runtime string
+	var runtime string
 
 	if m.Runtime != 0 {
 		runtime = fmt.Sprintf("%d mins", m.Runtime)
@@ -35,4 +40,20 @@ func (m Movie) MarshalJSON() ([]byte, error) {
 	}
 
 	return json.Marshal(aux)
+}
+
+func (m MovieModel) Get(id int64) error {
+	return nil
+}
+
+func (m MovieModel) Insert(movie *Movie) error {
+	return nil
+}
+
+func (m MovieModel) Update(movie *Movie) error {
+	return nil
+}
+
+func (m MovieModel) Delete(movie *Movie) error {
+	return nil
 }
