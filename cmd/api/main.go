@@ -5,12 +5,14 @@ import (
 	"database/sql"
 	"flag"
 	"fmt"
-	"greenlight.gokulprathin8.github.com/internal/data"
 	"log"
 	"net/http"
 	"os"
 	"time"
 
+	"greenlight.gokulprathin8.github.com/internal/data"
+
+	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 )
 
@@ -34,7 +36,11 @@ type application struct {
 }
 
 func main() {
-	fmt.Printf("%s", os.Getenv("DATABASE_CONNECTION_DSN"))
+
+	err := godotenv.Load()
+	if err != nil {
+		log.Println("No .env file found")
+	}
 
 	var cfg config
 
