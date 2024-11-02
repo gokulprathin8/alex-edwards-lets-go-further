@@ -117,13 +117,13 @@ func (m MovieModel) Insert(movie *Movie) error {
 func (m MovieModel) Update(movie *Movie) error {
 
 	query := `
-	UPDATE movies
+	UPDATE public.movies
 	SET title = $1, year = $2, runtime = $3, genres = $4, version = version + 1
 	WHERE id = $5
 	RETURNING version
 	`
 
-	args := []interface{} {
+	args := []interface{}{
 		movie.Title,
 		movie.Year,
 		movie.Runtime,
@@ -138,4 +138,3 @@ func (m MovieModel) Update(movie *Movie) error {
 func (m MovieModel) Delete(movie *Movie) error {
 	return nil
 }
-
