@@ -4,12 +4,14 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/julienschmidt/httprouter"
 	"io"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
+
+	"github.com/julienschmidt/httprouter"
+	"greenlight.gokulprathin8.github.com/internal/validator"
 )
 
 type envelope map[string]interface{}
@@ -85,9 +87,26 @@ func (app *application) readStrings(qs url.Values, key string, defaultValue stri
 
 func (app *application) readCSV(qs url.Values, key string, defaultValue []string) []string {
 	csv := qs.Get(key)
-
 	if csv == "" {
 		return defaultValue
 	}
+
 	return strings.Split(csv, ",")
+}
+
+func (app *application) readInt(qs url.Values, key string, defaultValue int, v *validator.Validator) int {
+
+	s := qs.Get(key)
+	
+	if s == "" {
+		return defaultValue
+	}
+
+	i, err := strconv.Atoi(s)
+	if err != nil {
+		v.AddError(key, "must be a integer value")
+		return defaultValue
+	}
+
+	return i
 }
